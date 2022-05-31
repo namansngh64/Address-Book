@@ -12,16 +12,16 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      trim: true
+      trim: true,
+      unique: true
     },
     userInfo: {
-      type: string,
+      type: String,
       trim: true
     },
     phone: {
       type: Number,
-      trim: true,
-      required: true
+      trim: true
     },
     activated: {
       type: Number,
@@ -29,7 +29,6 @@ const userSchema = new mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,
       trim: true
     },
     salt: {
@@ -48,7 +47,7 @@ const userSchema = new mongoose.Schema(
       contentType: String
     }
   },
-  { timestamps: "true" }
+  { timestamps: true }
 );
 
 userSchema
