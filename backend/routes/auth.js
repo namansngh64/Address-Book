@@ -1,7 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
-const { signin, signup, verifyOtp } = require("../controllers/auth");
+const {
+  signin,
+  signup,
+  verifyOtp,
+  signout,
+  genToken
+} = require("../controllers/auth");
 const { getUserById } = require("../controllers/user");
 
 //middleware
@@ -28,5 +34,8 @@ router.post(
   body("otp", "Should be 6 chars").isLength({ min: "6" }),
   verifyOtp
 );
+
+router.get("/signout", signout);
+router.get("/gentoken", genToken);
 
 module.exports = router;

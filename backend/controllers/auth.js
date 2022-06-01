@@ -2,6 +2,7 @@ const { validationResult } = require("express-validator");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const { expressjwt } = require("express-jwt");
 
 exports.signin = (req, res) => {
   const errors = validationResult(req);
@@ -126,4 +127,39 @@ exports.verifyOtp = (req, res) => {
       });
     }
   );
+};
+
+exports.signout = (req, res) => {
+  if (req.cookies.reftoken) res.clearCookie("reftoken");
+  return res.json({ message: "Signed Out Successfully!" });
+};
+
+exports.genToken = (req, res) => {
+  if (!req.cookies.reftoken) {
+    return res.json({ token: undefined });
+  }
+  const reftoken = jwt.verify(req.cookies.reftoken, process.env.REFSECRET);
+  if (reftoken.aud != "ref") {
+    return res.json({ token: undefined });
+  }
+  const token = jwt.sign({ _id: reftoken._id }, process.env.SECRET, {
+    expiresIn: "120s"
+  });
+  return res.json({ token: token, userId: reftoken._id });
+};
+
+//validate bearer token
+exports.isSignedIn = expressjwt({
+  secret: process.env.SECRET,
+  algorithms: ["HS256"],
+  requestProperty: "auth"
+});
+
+//validate payload id and client id
+exports.isAuthenticated = (req, res, next) => {
+  var check = req.auth && req.profile && req.auth._id == req.profile._id;
+  if (!check) {
+    return res.json({ error: "User not authenticated!" });
+  }
+  next();
 };
