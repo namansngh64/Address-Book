@@ -8,7 +8,8 @@ const {
     createAddress,
     getAddressById,
     updateAddress,
-    deleteAddress
+    deleteAddress,
+    getAllUserAddresses
 } = require("../controllers/address");
 
 router.param("userId", getUserById);
@@ -34,5 +35,11 @@ router.delete("/delete/:userId/:addressId",
     isSignedIn,
     isAuthenticated,
     deleteAddress
+)
+
+router.get("/addresses/:userId",
+    isSignedIn,
+    isAuthenticated,
+    getAllUserAddresses
 )
 module.exports = router

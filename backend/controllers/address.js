@@ -2,6 +2,7 @@ const Address = require('../models/address')
 const User = require('../models/user')
 const { validationResult } = require("express-validator");
 const user = require('../models/user');
+const { findById } = require('../models/address');
 exports.createAddress = (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -92,4 +93,15 @@ exports.deleteAddress = (req, res) => {
         })
     })
 
+}
+
+exports.getAllUserAddresses = (req, res) => {
+    Address.find({ creator: req.profile }).sort([
+        ["updatedAt", "desc"]
+    ]).exec((err, addresses) => {
+        if (err) {
+            return res.json({ error: "NO Address Found!" })
+        }
+        return res.json(addresses)
+    })
 }
