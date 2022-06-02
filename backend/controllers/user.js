@@ -1,8 +1,7 @@
 const User = require("../models/user");
 const formidable = require("formidable");
-const _ = require("lodash")
-const fs = require('fs')
-const { IncomingForm } = require("formidable");
+const _ = require("lodash");
+const fs = require("fs");
 exports.getUserById = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
         if (err || !user) {
@@ -10,7 +9,7 @@ exports.getUserById = (req, res, next, id) => {
         }
         req.profile = user;
         req.profile.secret = undefined; //hide secret
-        req.profile.encry_password = undefined; //hide encrypted password 
+        req.profile.encry_password = undefined; //hide encrypted password
         next();
     });
 };
@@ -20,11 +19,10 @@ exports.updateUser = (req, res) => {
     form.keepExtension = true;
 
     form.parse(req, (err, fields, file) => {
-
         if (err) {
             return res.json({ error: "Problem with image!" });
         }
-        const { name, phone, address, userInfo } = fields
+        const { name, phone, address, userInfo } = fields;
         if (!name || !phone || !address || !userInfo) {
             return res.json({ error: "Provide all info" });
         }
