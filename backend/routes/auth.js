@@ -11,7 +11,7 @@ const {
     isSignedIn,
     isAuthenticated
 } = require("../controllers/auth");
-const { getUserById, updateUser } = require("../controllers/user");
+const { getUserById, updateUser, getUser } = require("../controllers/user");
 
 //middleware
 router.param("userId", getUserById);
@@ -43,6 +43,11 @@ router.post("/updateUser/:userId",
     isSignedIn,
     isAuthenticated,
     updateUser
+)
+router.get("/getUser/:userId",
+    isSignedIn,
+    isAuthenticated,
+    getUser
 )
 router.get("/signout", signout);
 router.get("/gentoken", genToken);

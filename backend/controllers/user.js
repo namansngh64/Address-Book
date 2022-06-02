@@ -59,3 +59,6 @@ exports.updateUser = (req, res) => {
     });
 
 }
+exports.getUser = (req, res) => {
+    return res.json(req.profile)
+}
