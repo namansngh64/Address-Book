@@ -50,10 +50,12 @@ exports.signin = (req, res) => {
 
 const sendMail = (userId, otp) => {
   var transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
+    host: "smtp.mail.yahoo.com",
+    port: 465,
+    service: "yahoo",
+    secure: false,
     auth: {
-      user: " carson.langosh10@ethereal.email",
+      user: "merntest64@yahoo.com",
       pass: process.env.EPASS
     },
     tls: {
@@ -61,7 +63,7 @@ const sendMail = (userId, otp) => {
     }
   });
   var mailoptions = {
-    from: "carson.langosh10@ethereal.email",
+    from: "merntest64@yahoo.com",
     to: userId,
     subject: "Verify your Account",
     html: `<center>

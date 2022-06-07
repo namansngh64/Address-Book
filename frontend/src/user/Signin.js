@@ -116,7 +116,6 @@ const Signin = () => {
               {" "}
               <label>
                 {" "}
-                -
                 <input
                   type="checkbox"
                   onChange={handleCheck}
