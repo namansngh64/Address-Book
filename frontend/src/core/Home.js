@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -96,24 +98,18 @@ const Home = () => {
   const addressCard = (id, key, name, address, phone, email) => {
     return (
       <div className="card" key={key} style={{ marginTop: "1%" }}>
-        <h5 className="card-header">{name}</h5>
+        <h5 className="card-header"> {name} </h5>{" "}
         <div className="card-body">
-          <h5 className="card-title">{address}</h5>
+          <h5 className="card-title"> {address} </h5>{" "}
           <p className="card-text">
+            {" "}
             {phone != undefined && (
               <>
-                Phone Number:
-                {phone}
-                <br />
+                Phone Number: {phone} <br />
               </>
-            )}
-            {email != undefined && (
-              <>
-                Email:
-                {email}
-              </>
-            )}
-          </p>
+            )}{" "}
+            {email != undefined && <> Email: {email} </>}{" "}
+          </p>{" "}
           <button
             onClick={() => {
               console.log(name);
@@ -131,10 +127,10 @@ const Home = () => {
             className="btn btn-warning"
             style={{ margin: "1%" }}
           >
-            Edit
-          </button>
-          <button className="btn btn-danger">Delete</button>
-        </div>
+            Edit{" "}
+          </button>{" "}
+          <button className="btn btn-danger"> Delete </button>{" "}
+        </div>{" "}
       </div>
     );
   };
@@ -183,23 +179,23 @@ const Home = () => {
   return (
     <Base>
       <center>
-        <h2>Welcome </h2>
+        <h2> Welcome </h2>{" "}
         <button className="btn btn-outline-danger" style={{ float: "right" }}>
-          Signout
-        </button>
-      </center>
+          Signout{" "}
+        </button>{" "}
+      </center>{" "}
       {!create && (
         <button className="btn btn-primary" onClick={showAddress}>
-          Create Address
+          Create Address{" "}
         </button>
-      )}
+      )}{" "}
       {create && (
         <button className="btn btn-danger" onClick={showAddress}>
-          X
+          X{" "}
         </button>
-      )}
+      )}{" "}
       <br />
-      <br />
+      <br />{" "}
       {create && (
         <>
           <div className="form-floating">
@@ -212,9 +208,8 @@ const Home = () => {
               onChange={handleChange("name")}
               required
             />
-            <label htmlFor="floatingInput">Name*</label>
-          </div>
-
+            <label htmlFor="floatingInput"> Name * </label>{" "}
+          </div>{" "}
           <div className="form-floating">
             <input
               type="text"
@@ -223,11 +218,11 @@ const Home = () => {
               placeholder="Appartment No 16 New Delhi 110044"
               value={address}
               onChange={handleChange("address")}
-            />
-            <label htmlFor="floatingPassword">Address*</label>
-          </div>
+            />{" "}
+            <label htmlFor="floatingPassword"> Address * </label>{" "}
+          </div>{" "}
           <br />
-          <h6>Additional Info</h6>
+          <h6> Additional Info </h6>{" "}
           <div className="form-floating">
             <input
               type="email"
@@ -236,9 +231,9 @@ const Home = () => {
               placeholder="name@example.com"
               value={email}
               onChange={handleChange("email")}
-            />
-            <label htmlFor="floatingInput">Email address</label>
-          </div>
+            />{" "}
+            <label htmlFor="floatingInput"> Email address </label>{" "}
+          </div>{" "}
           <div className="form-floating">
             <input
               type="text"
@@ -247,17 +242,16 @@ const Home = () => {
               placeholder="9919191919919"
               value={phone}
               onChange={handleChange("phone")}
-            />
-            <label htmlFor="floatingPassword">Phone Number</label>
-          </div>
+            />{" "}
+            <label htmlFor="floatingPassword"> Phone Number </label>{" "}
+          </div>{" "}
           <br />
           <button className="btn btn-outline-primary m-1" onClick={saveAddress}>
-            Save Address
-          </button>
-
-          {JSON.stringify(values)}
+            Save Address{" "}
+          </button>{" "}
+          {JSON.stringify(values)}{" "}
         </>
-      )}
+      )}{" "}
       {edit && (
         <>
           <div className="form-floating">
@@ -270,9 +264,8 @@ const Home = () => {
               onChange={handleEChange("e_name")}
               required
             />
-            <label htmlFor="floatingInput">Name*</label>
-          </div>
-
+            <label htmlFor="floatingInput"> Name * </label>{" "}
+          </div>{" "}
           <div className="form-floating">
             <input
               type="text"
@@ -281,11 +274,11 @@ const Home = () => {
               placeholder="Appartment No 16 New Delhi 110044"
               value={e_address}
               onChange={handleEChange("e_address")}
-            />
-            <label htmlFor="floatingPassword">Address*</label>
-          </div>
+            />{" "}
+            <label htmlFor="floatingPassword"> Address * </label>{" "}
+          </div>{" "}
           <br />
-          <h6>Additional Info</h6>
+          <h6> Additional Info </h6>{" "}
           <div className="form-floating">
             <input
               type="email"
@@ -294,9 +287,9 @@ const Home = () => {
               placeholder="name@example.com"
               value={e_email}
               onChange={handleEChange("e_email")}
-            />
-            <label htmlFor="floatingInput">Email address</label>
-          </div>
+            />{" "}
+            <label htmlFor="floatingInput"> Email address </label>{" "}
+          </div>{" "}
           <div className="form-floating">
             <input
               type="text"
@@ -305,18 +298,17 @@ const Home = () => {
               placeholder="9919191919919"
               value={e_phone}
               onChange={handleEChange("e_phone")}
-            />
-            <label htmlFor="floatingPassword">Phone Number</label>
-          </div>
+            />{" "}
+            <label htmlFor="floatingPassword"> Phone Number </label>{" "}
+          </div>{" "}
           <br />
-
           <button className="btn btn-outline-warning" onClick={updateAddress}>
-            Update Address
-          </button>
-          {JSON.stringify(evalues)}
+            Update Address{" "}
+          </button>{" "}
+          {JSON.stringify(evalues)}{" "}
         </>
-      )}
-      {displayCards()}
+      )}{" "}
+      {displayCards()}{" "}
     </Base>
   );
 };

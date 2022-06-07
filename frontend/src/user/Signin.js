@@ -86,7 +86,7 @@ const Signin = () => {
     <Base>
       <div className="container" style={{ margin: "24%", width: "50%" }}>
         <center>
-          <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+          <h1 className="h3 mb-3 fw-normal"> Please sign in </h1>{" "}
           <form>
             <div className="form-floating">
               <input
@@ -97,9 +97,9 @@ const Signin = () => {
                 placeholder="name@example.com"
                 required
                 onChange={handleChange("email")}
-              />
-              <label htmlFor="floatingInput">Email address</label>
-            </div>
+              />{" "}
+              <label htmlFor="floatingInput"> Email address </label>{" "}
+            </div>{" "}
             <div className="form-floating">
               <input
                 type="password"
@@ -109,34 +109,36 @@ const Signin = () => {
                 required
                 placeholder="Password"
                 onChange={handleChange("password")}
-              />
-              <label htmlFor="floatingPassword">Password</label>
-            </div>
-
+              />{" "}
+              <label htmlFor="floatingPassword"> Password </label>{" "}
+            </div>{" "}
             <div className="checkbox mb-3">
+              {" "}
               <label>
+                {" "}
+                -
                 <input
                   type="checkbox"
                   onChange={handleCheck}
                   checked={cookie}
                   value="remember-me"
                 />{" "}
-                Remember me
-              </label>
-            </div>
+                Remember me{" "}
+              </label>{" "}
+            </div>{" "}
             <button
               className="w-100 btn btn-lg btn-primary"
               onClick={callSignin}
             >
               Sign in
-            </button>
-          </form>
+            </button>{" "}
+          </form>{" "}
           <h6>
-            New User? <Link to={"/signup"}>Signup</Link>
-          </h6>
-          {JSON.stringify(values)}
-        </center>
-      </div>
+            New User ? <Link to={"/signup"}> Signup </Link>{" "}
+          </h6>{" "}
+          {JSON.stringify(values)}{" "}
+        </center>{" "}
+      </div>{" "}
     </Base>
   );
 };

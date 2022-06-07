@@ -50,14 +50,18 @@ exports.signin = (req, res) => {
 
 const sendMail = (userId, otp) => {
   var transporter = nodemailer.createTransport({
-    service: "gmail",
+    host: "smtp.ethereal.email",
+    port: 587,
     auth: {
-      user: "merntest64@gmail.com",
+      user: " carson.langosh10@ethereal.email",
       pass: process.env.EPASS
+    },
+    tls: {
+      rejectUnauthorized: false
     }
   });
   var mailoptions = {
-    from: "merntest64@gmail.com",
+    from: "carson.langosh10@ethereal.email",
     to: userId,
     subject: "Verify your Account",
     html: `<center>
@@ -66,9 +70,8 @@ const sendMail = (userId, otp) => {
           <br>
           <h3>
          is your OTP for activating the account<br>
-         Happy Adress Booking!
+         Happy Address Booking!
          </h3></center>
-        
           `
   };
   transporter
