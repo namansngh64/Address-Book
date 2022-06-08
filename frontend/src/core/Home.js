@@ -5,9 +5,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   createAddress,
-  getAllUserAddresses
+  getAllUserAddresses,
+  updateAddress,
+  deleteAddress
 } from "../address/helper/addressapicalls";
-import { genToken } from "../auth/helper/authapicalls";
+import { genToken, signout } from "../auth/helper/authapicalls";
 import Base from "./Base";
 
 const Home = () => {
@@ -28,7 +30,8 @@ const Home = () => {
     e_address: "",
     id: "",
     edit: false
-  });
+  }); 
+
   const { email, address, name, phone } = values;
   const { e_email, e_address, e_name, e_phone, edit, id } = evalues;
   const message = () => {
@@ -91,10 +94,89 @@ const Home = () => {
   //   console.log(e_name);
   // };
 
-  const updateAddress = () => {
-    //
-  };
+  const callupdateAddress = () => {
+    const add={
+      email:e_email,
+      address:e_address,
+      name:e_name,
+      phone:e_phone
+    }
+    updateAddress(id,add).then((data)=>{
+      if (data.error) {
+        toast.error(data.error.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
+        toast.error(data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
+        return;
+      }
+      toast.success(data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      });
+      preload();
+      setEValues({
+        ...values,
+        edit: !edit
+      });
+    });
 
+  };
+  const calldeleteAddress=(a_id)=>{
+    
+    deleteAddress(a_id).then((data)=>{
+      if (data.error) {  
+        toast.error(data.error.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
+        toast.error(data.error, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
+        return;
+      }
+      toast.success(data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      });
+      preload();
+    })
+  }
+  
   const addressCard = (id, key, name, address, phone, email) => {
     return (
       <div className="card" key={key} style={{ marginTop: "1%" }}>
@@ -120,7 +202,7 @@ const Home = () => {
                 e_phone: phone,
                 e_email: email,
                 edit: !edit,
-                id: id
+                id: id 
               });
               // showEditAddress();
             }}
@@ -129,7 +211,8 @@ const Home = () => {
           >
             Edit{" "}
           </button>{" "}
-          <button className="btn btn-danger"> Delete </button>{" "}
+          <button className="btn btn-danger" onClick={()=>{
+            calldeleteAddress(id)}}> Delete </button>{" "}
         </div>{" "}
       </div>
     );
@@ -171,16 +254,35 @@ const Home = () => {
         draggable: true,
         progress: undefined
       });
+      preload();
     });
-    preload();
-    showAddress();
+    
+   // showAddress();
   };
+
+
+   const callsignout=()=>{
+     signout().then((res)=>{
+      toast.success(res.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined
+      });
+      history("/signin",{state:{message:res.message}})
+     })
+   }
+ 
+   
 
   return (
     <Base>
       <center>
         <h2> Welcome </h2>{" "}
-        <button className="btn btn-outline-danger" style={{ float: "right" }}>
+        <button className="btn btn-outline-danger" style={{ float: "right" }} onClick={callsignout}>
           Signout{" "}
         </button>{" "}
       </center>{" "}
@@ -302,8 +404,8 @@ const Home = () => {
             <label htmlFor="floatingPassword"> Phone Number </label>{" "}
           </div>{" "}
           <br />
-          <button className="btn btn-outline-warning" onClick={updateAddress}>
-            Update Address{" "}
+          <button className="btn btn-outline-warning" onClick={callupdateAddress}>
+            Update Address{" "} 
           </button>{" "}
           {JSON.stringify(evalues)}{" "}
         </>

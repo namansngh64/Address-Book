@@ -69,3 +69,14 @@ export const verifyOtp = (u_otp, userId) => {
     })
     .catch((err) => console.error(err));
 };
+
+export const signout=()=>{
+  return axios.get(`${API}/signout`,{
+    Accept: "application/json",
+    ContentType: "application/json",
+    withCredentials: true
+  }).then((res)=>{
+       return res.data;
+  }).catch((err)=>console.log(err));
+}
+

@@ -11,8 +11,8 @@ const Signin = () => {
     loading: false,
     success: false
   });
-  let history = useNavigate();
-  let props = useLocation();
+  let history = useNavigate(); //can pass state 
+  let props = useLocation();//allows to access state 
 
   const message = () => {
     var msg = (props.state && props.state.message) || undefined;
@@ -27,7 +27,7 @@ const Signin = () => {
         progress: undefined
       });
       msg = undefined;
-      history("/signin");
+      history("/signin");//cleans up state
     }
   };
 
