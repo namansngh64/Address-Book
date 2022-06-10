@@ -5,6 +5,7 @@ import Signup from "./user/Signup";
 import Home from "./core/Home";
 import PrivateRoute from "./auth/helper/PrivateRoute";
 import Verify from "./user/Verify";
+import Edit from "./user/Edit";
 
 const Routes = () => {
   return (
@@ -28,6 +29,15 @@ const Routes = () => {
           element={
             <PrivateRoute>
               <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/edit"
+          exact
+          element={
+            <PrivateRoute>
+              <Edit />
             </PrivateRoute>
           }
         />

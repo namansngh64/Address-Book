@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Base = ({ className = " text-black p-2", children }) => {
   return (
-    <div className="">
+    <div className="" style={{ marginBottom: "30px" }}>
       <ToastContainer
         theme="dark"
         position="top-right"

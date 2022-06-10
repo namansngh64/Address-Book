@@ -11,6 +11,7 @@ import {
 } from "../address/helper/addressapicalls";
 import { genToken, signout } from "../auth/helper/authapicalls";
 import Base from "./Base";
+import { Modal } from "bootstrap";
 
 const Home = () => {
   let props = useLocation();
@@ -30,10 +31,11 @@ const Home = () => {
     e_address: "",
     id: "",
     edit: false
-  }); 
+  });
 
   const { email, address, name, phone } = values;
   const { e_email, e_address, e_name, e_phone, edit, id } = evalues;
+  const [add_id, setAdd_id] = useState("");
   const message = () => {
     var msg = (props.state && props.state.message) || undefined;
     if (msg != undefined) {
@@ -94,14 +96,21 @@ const Home = () => {
   //   console.log(e_name);
   // };
 
+  const showModal = (a_id) => {
+    var modal = new Modal(document.getElementById("myModal"));
+    document.getElementById("AddressId").value = a_id; //another option
+    setAdd_id(a_id);
+    modal.show();
+  };
+
   const callupdateAddress = () => {
-    const add={
-      email:e_email,
-      address:e_address,
-      name:e_name,
-      phone:e_phone
-    }
-    updateAddress(id,add).then((data)=>{
+    const add = {
+      email: e_email,
+      address: e_address,
+      name: e_name,
+      phone: e_phone
+    };
+    updateAddress(id, add).then((data) => {
       if (data.error) {
         toast.error(data.error.msg, {
           position: "top-right",
@@ -138,12 +147,12 @@ const Home = () => {
         edit: !edit
       });
     });
-
   };
-  const calldeleteAddress=(a_id)=>{
-    
-    deleteAddress(a_id).then((data)=>{
-      if (data.error) {  
+  const calldeleteAddress = () => {
+    var myModalEl = document.getElementById("myModal");
+    var modal = Modal.getInstance(myModalEl);
+    deleteAddress(add_id).then((data) => {
+      if (data.error) {
         toast.error(data.error.msg, {
           position: "top-right",
           autoClose: 5000,
@@ -174,9 +183,10 @@ const Home = () => {
         progress: undefined
       });
       preload();
-    })
-  }
-  
+    });
+    modal.hide();
+  };
+
   const addressCard = (id, key, name, address, phone, email) => {
     return (
       <div className="card" key={key} style={{ marginTop: "1%" }}>
@@ -202,7 +212,7 @@ const Home = () => {
                 e_phone: phone,
                 e_email: email,
                 edit: !edit,
-                id: id 
+                id: id
               });
               // showEditAddress();
             }}
@@ -211,8 +221,15 @@ const Home = () => {
           >
             Edit{" "}
           </button>{" "}
-          <button className="btn btn-danger" onClick={()=>{
-            calldeleteAddress(id)}}> Delete </button>{" "}
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              showModal(id);
+            }}
+          >
+            {" "}
+            Delete{" "}
+          </button>{" "}
         </div>{" "}
       </div>
     );
@@ -256,13 +273,12 @@ const Home = () => {
       });
       preload();
     });
-    
-   // showAddress();
+    showAddress();
+    // showAddress();
   };
 
-
-   const callsignout=()=>{
-     signout().then((res)=>{
+  const callsignout = () => {
+    signout().then((res) => {
       toast.success(res.message, {
         position: "top-right",
         autoClose: 5000,
@@ -272,19 +288,28 @@ const Home = () => {
         draggable: true,
         progress: undefined
       });
-      history("/signin",{state:{message:res.message}})
-     })
-   }
- 
-   
+      history("/signin", { state: { message: res.message } });
+    });
+  };
 
   return (
     <Base>
       <center>
         <h2> Welcome </h2>{" "}
-        <button className="btn btn-outline-danger" style={{ float: "right" }} onClick={callsignout}>
+        <button
+          className="btn btn-outline-danger"
+          style={{ float: "right" }}
+          onClick={callsignout}
+        >
           Signout{" "}
         </button>{" "}
+        <Link
+          className="btn btn-warning"
+          style={{ float: "right", marginRight: "1%" }}
+          to="/edit"
+        >
+          Edit profile
+        </Link>
       </center>{" "}
       {!create && (
         <button className="btn btn-primary" onClick={showAddress}>
@@ -298,6 +323,41 @@ const Home = () => {
       )}{" "}
       <br />
       <br />{" "}
+      <div id="myModal" className="modal" tabIndex="-1">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Do you want to delete this?</h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <p>This action cannot be undone!</p>
+            </div>
+            <input type="text" id="AddressId" hidden />
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={calldeleteAddress}
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       {create && (
         <>
           <div className="form-floating">
@@ -404,8 +464,11 @@ const Home = () => {
             <label htmlFor="floatingPassword"> Phone Number </label>{" "}
           </div>{" "}
           <br />
-          <button className="btn btn-outline-warning" onClick={callupdateAddress}>
-            Update Address{" "} 
+          <button
+            className="btn btn-outline-warning"
+            onClick={callupdateAddress}
+          >
+            Update Address{" "}
           </button>{" "}
           {JSON.stringify(evalues)}{" "}
         </>
