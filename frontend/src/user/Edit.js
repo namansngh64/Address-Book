@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Base from "../core/Base";
 import { getUser, updateUser1 } from "./helper/userapicalls";
+import { Link } from "react-router-dom";
+var Buffer = require("buffer/").Buffer;
 
 const Edit = () => {
   const [values, setValues] = useState({
@@ -41,13 +43,17 @@ const Edit = () => {
     });
   };
 
+  const handlePic = (e) => {
+    formdata.set("profile_pic", e.target.files[0]);
+  };
   const callUpdateUser = (e) => {
     e.preventDefault();
     formdata.set("name", name);
     formdata.set("email", email);
-    formdata.set("phone", phone);
-    formdata.set("userInfo", userInfo);
-    formdata.set("address", address);
+    formdata.set("phone", phone ? phone : " ");
+    formdata.set("userInfo", userInfo ? userInfo : " ");
+    formdata.set("address", address ? address : " ");
+    // formdata.set("profile_pic", profile_pic);
     updateUser1(formdata)
       .then((data) => {
         if (data.error) {
@@ -84,15 +90,31 @@ const Edit = () => {
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <Base>
       <center>
+        <Link to="/home" style={{ float: "left" }} className="btn btn-primary">
+          Home
+        </Link>
         <h2>Edit Profile</h2>
       </center>
-      <img src={profile_pic} />
+      {profile_pic && (
+        <img
+          className="img-fluid"
+          src={`data:${profile_pic.contentType};base64,${Buffer.from(
+            profile_pic.data.data
+          ).toString("base64")}`}
+          style={{ height: "200px", width: "200px" }}
+        />
+      )}
       <form encType="multipart/form-data">
-        <input type="file" id="myFile" name="filename" className="m-2" />
+        <input
+          type="file"
+          id="myFile"
+          name="filename"
+          onChange={handlePic}
+          className="m-2"
+        />
         <div className="form-floating">
           <input
             type="text"

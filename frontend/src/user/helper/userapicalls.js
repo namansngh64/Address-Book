@@ -22,20 +22,14 @@ export const getUser = async () => {
 export const updateUser1 = async (user_p) => {
   const user = await genToken();
   return axios
-    .put(
-      `${API}/updateUser/${user.data.userId}`,
-      {
-        ...user_p
-      },
-      {
-        headers: {
-          Accept: "application/json",
-          ContentType: "application/json",
-          Authorization: `Bearer ${user.data.token}`,
-          withCredentials: true
-        }
+    .put(`${API}/updateUser/${user.data.userId}`, user_p, {
+      headers: {
+        Accept: "application/json",
+        ContentType: "application/json",
+        Authorization: `Bearer ${user.data.token}`,
+        withCredentials: true
       }
-    )
+    })
     .then((res) => {
       console.log(res);
       return res.data;
